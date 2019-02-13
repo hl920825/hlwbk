@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+		<meta charset="UTF-8">
+    <title>
+        葫芦娃的个人博客
+    </title>
+    <link href="{% static '/css/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}"/>
+    <link href="{% static 'images/huluwa_icon.jpg' %}" rel="shortcut icon"/>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+	</head>
+<body>
+<div class="w_container">
+        <div class="container">
+            <div class="row w_main_row">
+
+                <ol class="breadcrumb w_breadcrumb">
+                    <li><a href="{% url 'blogs:首页' %}">首页</a></li>
+                    <li><a href="">文章</a></li>
+                    <li class="active">{{ article.title }}</li>
+                    <span class="w_navbar_tip">我们长路漫漫，只因学无止境。</span>
+                </ol>
+
+                <div class="col-lg-9 col-md-9 w_main_left">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h2 class="c_titile">{{ article.title }}</h2>
+                            <p class="box_c"><span class="d_time">发布时间：{{ article.create_time }}</span>
+                                <span>浏览：{{ article.liulans }}次</span></p>
+
+                            <ul class="infos">
+                                {{ article.mainBody |safe }}
+                            </ul>
+
+                            <div class="keybq">
+                                <p><span>关键字</span>：
+                                    {% for tag in article.tags.all %}
+                                        <a class="label label-default">{{ tag }}</a>
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <textarea rows="3" name="content" id="content" class="form-control"></textarea>
+                                <br/>
+                                <input type="hidden" id="session" value="{{ request.session.ID }}">
+                                <input class="btn btn-success" id="sbt" type="button" value="评论">
+                            </form>
+                            <br/>
+                            <div><p style="font-size: 18px;font-family:'宋体','仿宋',sans-serif;">最新评论:</p></div>
+                            <br/>
+                            {% for comment in comments %}
+                                <div>
+                                    <p style="font-size: 18px;font-family:'宋体','仿宋',sans-serif;">{{ comment.content }}</p>
+                                    <p style="text-align:right;">评论时间：{{ comment.create_time }}</p>
+                                </div>
+                            {% empty %}
+                                <div>
+                                    <p style="font-size: 18px;font-family:'宋体','仿宋',sans-serif;">暂时没有评论!</p>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<script>
+    $(function () {
+            //判断用户是否登录,登录才能评论
+            $('#sbt').on('click', function () {
+                var id = $('#session').val();
+                var content = $("#content").val();
+                var data = {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'content': content
+                }
+                console.debug(content)
+                if (id) {
+                    if (content) {
+                        $.ajax({
+                            url: '{% url "blogs:博客详情" article.pk %}',
+                            type: 'post',
+                            data: data,
+                            dataType: 'json',
+                            success: function (data) {
+                                alert('评论成功');
+                                location.href = "{% url 'blogs:博客详情' article.pk %}";
+                            }
+                        })
+                    } else {
+                        alert('评论内容不能为空');
+                    }
+                } else {
+                    alert('请登录后再评论');
+                }
+            });
+        })
+</script>
+</body>
+</html>

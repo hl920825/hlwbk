@@ -2,182 +2,97 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>博客</title>
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="renderer" content="webkit">
-        <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <link rel="icon" type="image/png" href="/theme/default/images/favicon.png">
-		<link href="{% static 'css/amazeui.min.css' %}" rel="stylesheet" type="text/css" />
-		<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
-		<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
-		<script src="{% static 'js/time.js' %}"></script>
-		<style>
-			.shop-list-mid .tit a{color: #909090;
-    font-size: 1.4rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    white-space: normal;
-    text-overflow: ellipsis;}
-		</style>
+		<meta charset="UTF-8">
+    <title>
+        葫芦娃的个人博客
+    </title>
+    <link href="{% static '/css/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}"/>
+    <link href="{% static 'images/huluwa_icon.jpg' %}" rel="shortcut icon"/>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
 	</head>
-	<body>
-		<header data-am-widget="header" class="am-header am-header-default sq-head ">
-			<div class="am-header-left am-header-nav">
-{#				<a href="javascript:history.back()" class="">#}
-{#					<i class="am-icon-chevron-left"></i>#}
-{#				</a>#}
-			</div>
-		    <div class="cate-search">
-		    	<input type="text" class="cate-input" placeholder="请输入您要的搜索的文章关键词" />
-		    	<input type="button" class="cate-btn" />
-	        </div>
-	    </header>
-	    <div style="height: 49px;"></div>
-	    <ul class="list-nav">
-	    	<li class="current"><a href="">首页</a></li>
-	    	<li><a href="">销量</a></li>
-            <li><a href="">价格</a></li>
-	    	<li><a href="">新品</a></li>
-	    </ul>
-	    <div class="content-list">
-	    	<div class="list-left">
-	    		<li><a href="">进口特产</a></li>
-	    		<li class="current"><a href="">休闲零食</a></li>
-	    		<li><a href="">糖果饼干</a></li>
-	    		<li><a href="">饮料牛奶</a></li>
-	    		<li><a href="">方便速食</a></li>
-	    		<li><a href="">生活用品</a></li>
-	    		<li><a href="">香烟代购</a></li>
-	    		<li><a href="">水果酸奶便当</a></li>
-	    	</div>
-	    	<div class="list-right">
-	    		<ul class="list-pro">
-	    	<li>
-	    		<a href="detail.html"><img src=" {% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
+    <body>
+        <div class="w_header_nav">
+            <div class="container">
+                <div class="w_header_top">
+                    {#            <a href="#" class="w_logo"></a>#}
+                    <span class="w_header_nav">
+                        <ul>
+                            <li><a href="{% url 'blogs:首页' %}" class="active">首页</a></li>
+                            <li><a href="{% url 'blogs:关于我' %}">关于</a></li>
+                            <li><a href="{% url 'blogs:评论' %}">留言</a></li>
+                            <li><a href=""></a></li>
+                            {% if request.session.ID %}
+                                <li><a href="">{{ request.session.phone }}</a></li>
+                                <li><a href="">退出登录</a></li>
+                            {% else %}
+                                <li><a href="{% url 'blogs:登录' %}" title="登录">登录</a></li>
+                                <li><a href="{% url 'blogs:注册' %}" title="注册">注册</a></li>
+                            {% endif %}
+                        </ul>
+                    </span>
+                    <div class="w_search">
+                        <div class="w_searchbox">
+                            <form action="{% url 'search:haystack_search' %}" method="get">
+                                <input type="text" name="q" value="" class="cate-input" placeholder="search"/>
+                                <input type="submit" class="cate-btn" value="搜索"/>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-{#                <div class="list-cart">#}
-{#	                <div class="d-stock ">#}
-{#			                <a class="decrease">-</a>#}
-{#			                <input id="num" readonly="" class="text_box" name="" type="text" value="0">#}
-{#			                <a class="increase">+</a>#}
-{#	                </div>#}
-{#                </div>#}
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src=" {% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-{#                <div class="list-cart">#}
-{#                <div class="d-stock ">#}
-{#		                <a class="decrease">-</a>#}
-{#		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">#}
-{#		                <a class="increase">+</a>#}
-{#                </div>#}
-{#                </div>#}
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src="{% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-{#                <div class="list-cart">#}
-{#                <div class="d-stock ">#}
-{#		                <a class="decrease">-</a>#}
-{#		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">#}
-{#		                <a class="increase">+</a>#}
-{#                </div>#}
-{#                </div>#}
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src="{% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-{#                <div class="list-cart">#}
-{#                <div class="d-stock ">#}
-{#		                <a class="decrease">-</a>#}
-{#		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">#}
-{#		                <a class="increase">+</a>#}
-{#                </div>#}
-{#                </div>#}
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src="{% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-{#                <div class="list-cart">#}
-{#                <div class="d-stock ">#}
-{#		                <a class="decrease">-</a>#}
-{#		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">#}
-{#		                <a class="increase">+</a>#}
-{#                </div>#}
-{#                </div>#}
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src="{% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-{#                <div class="list-cart">#}
-{#                <div class="d-stock ">#}
-{#		                <a class="decrease">-</a>#}
-{#		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">#}
-{#		                <a class="increase">+</a>#}
-{#                </div>#}
-{#                </div>#}
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src="{% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-{#                <div class="list-cart">#}
-{#                <div class="d-stock ">#}
-{#		                <a class="decrease">-</a>#}
-{#		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">#}
-{#		                <a class="increase">+</a>#}
-{#                </div>#}
-{#                </div>#}
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
+            </div>
+        </div>
+    <div class="panel panel-default contenttop">
+        <a href="#">
+            <strong>葫芦小金刚的博客</strong>
+            <h3 class="title">男人一定要骚</h3>
+        </a>
+    </div>
 
-	    </ul>
-	    	</div>
-	    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">最新发布</h3>
+        </div>
+        <div class="panel-body">
 
-	    <!--底部-->
- <div style="height: 55px;"></div>
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/amazeui.min.js' %}"></script>
-	</body>
+            <!--文章列表开始-->
+            <div class="contentList">
+                {% for article in articles %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="contentleft">
+                                <h4><a class="title" href="{% url 'blogs:博客详情' article.id %}">
+                                    {{ article.title }}
+                                </a></h4>
+                                <p>
+                                    {% for tag in article.tags.all %}
+                                        <a class="label label-default">{{ tag}}</a>
+                                    {% endfor %}
+                                </p>
+                                <p class="overView">
+                                    {{ article.main_digest }}
+                                </p>
+                                <p>
+                                    <span class="count">
+                                                    <i class="glyphicon glyphicon-eye-open"></i>阅读量:{{ article.liulans }}
+                                    </span>
+                                    <span class="count">
+                                        <i class="glyphicon glyphicon-comment"></i>评论:{{ article.comment }}
+                                    </span>
+                                    <span class="count">
+                                                        <i class="glyphicon glyphicon-time"></i>{{ article.create_time }}
+                                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <!--文章列表结束-->
+        </div>
+    </div>
+    </body>
 </html>

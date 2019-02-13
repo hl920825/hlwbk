@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+            葫芦娃个人博客
+    </title>
+    <link href="{% static '/css/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}"/>
+    <link href="{% static 'images/huluwa_icon.jpg' %}" rel="shortcut icon"/>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+    <div class="w_header">
+        <div class="container">
+            <div class="w_header_top">
+                {#            <a href="#" class="w_logo"></a>#}
+                <span class="w_header_nav">
+					<ul>
+						<li><a href="" class="active">首页</a></li>
+						<li><a href="">关于</a></li>
+						<li><a href="">成长</a></li>
+						<li><a href="">学习</a></li>
+						<li><a href="">娱乐</a></li>
+						<li><a href="">说说</a></li>
+						<li><a href="">留言</a></li>
+                        <li><a href=""></a></li>
+                        <li><a href=""></a></li>
+{#                        {% if request.session.ID %}#}
+                            <li><a href=""></a></li>
+                            <li><a href="">退出登录</a></li>
+{#                        {% else %}#}
+                            <li><a href="" title="登录">登录</a></li>
+                            <li><a href="" title="注册">注册</a></li>
+{#                        {% endif %}#}
+					</ul>
+				</span>
+                <div class="w_search">
+                    <div class="w_searchbox">
+                        <form action="/search/" method="get">
+                            <input type="text" name="q" value="" class="cate-input" placeholder="search"/>
+                            <input type="submit" class="cate-btn" value="搜索"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w_foot">
+        <div class="w_foot_copyright">Copyright &copy; 2017-2020, www.wfyvv.com. All Rights Reserved. <span>|</span>
+            <a target="_blank" href="http://www.miitbeian.gov.cn/" rel="nofollow">皖ICP备17002922号</a>
+        </div>
+    </div>
+
+</body>
+</html>

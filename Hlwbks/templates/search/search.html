@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    <title>
+        葫芦娃的个人博客
+    </title>
+    <link href="{% static '/css/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}"/>
+    <link href="{% static 'images/huluwa_icon.jpg' %}" rel="shortcut icon"/>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+	</head>
+    <body>
+        <div class="w_header_nav">
+            <div class="container">
+                <div class="w_header_top">
+                    {#            <a href="#" class="w_logo"></a>#}
+                    <span class="w_header_nav">
+                        <ul>
+                            <li><a href="{% url 'blogs:首页' %}" class="active">首页</a></li>
+                            <li><a href="{% url 'blogs:关于我' %}">关于</a></li>
+                            <li><a href="{% url 'blogs:评论' %}">留言</a></li>
+                            <li><a href=""></a></li>
+                            {% if request.session.ID %}
+                                <li><a href="">{{ request.session.phone }}</a></li>
+                                <li><a href="">退出登录</a></li>
+                            {% else %}
+                                <li><a href="{% url 'blogs:登录' %}" title="登录">登录</a></li>
+                                <li><a href="{% url 'blogs:注册' %}" title="注册">注册</a></li>
+                            {% endif %}
+                        </ul>
+                    </span>
+                    <div class="w_search">
+                        <div class="w_searchbox">
+                            <form action="/search/" method="get">
+                                <input type="text" name="q" value="" class="cate-input" placeholder="search"/>
+                                <input type="submit" class="cate-btn" value="搜索"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="panel panel-default contenttop">
+        <a href="#">
+            <strong>葫芦小金刚的博客</strong>
+            <h3 class="title">男人一定要骚</h3>
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">最新发布</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="col-lg-9 col-md-9 w_main_left">
+                    <div class="panel panel-default">
+                        <div class="panel-body contentList">
+                            {% if query %}
+                                {% for result in page %}
+                                    <div class="panel panel-default w_article_item">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <h4 class="media-heading">
+                                                    <a class="title"
+                                                       href="{% url 'blogs:博客详情' result.object.pk %}">{{ result.object.title }}</a>
+                                                </h4>
+                                                <p>
+                                                    {% for tag in result.object.tags.all %}
+                                                        <a class="label label-default">{{ tag }}</a>
+                                                    {% endfor %}
+                                                </p>
+                                                <p class="w_list_overview overView">{{ result.object.main_digest }}</p>
+                                                <p class="count_r">
+                                                    <span class="count">
+                                                    <span class="count">
+                                                    <i class="glyphicon glyphicon-eye-open"></i>阅读:{{ result.object.liulans }}
+                                                    </span>
+                                                    <span class="count">
+                                                    <i class="glyphicon glyphicon-comment"></i>评论:{{ result.object.comment }}
+                                                    </span>
+                                                    <span
+                                                            class="count"><i
+                                                            class="glyphicon glyphicon-time"></i>{{ result.object.change_time }}
+                                                    </span>
+                                                </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <li>没有找到您搜索的内容！</li>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            <!--文章列表结束-->
+        </div>
+    </div>
+    </body>
+</html>
