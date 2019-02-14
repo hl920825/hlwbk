@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from blogs.views import index, detail, Register,Login,Comment,About
+from blogs.views import index, detail, Register,Login,Comment,About,quits
 
 urlpatterns = [
     url(r'^index/$', index, name="首页"),
@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^login/$', Login.as_view(), name="登录"),
     url(r'^about/$', About.as_view(), name="关于我"),
     url(r'^comment/$', Comment.as_view(), name="评论"),
+    url(r'^quits/$',quits,name="注销"),
 ]

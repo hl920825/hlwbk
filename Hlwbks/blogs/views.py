@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
@@ -16,6 +17,20 @@ def index(request):
         articles = Article.objects.filter(is_delete=False)
         # 未删除的标签
         tags = Tag.objects.filter(is_delete=False)
+        # Paginator 实现分页
+        paginator = Paginator(articles,10)
+        # 获取当前页面的页码
+        page = request.GET.get('page',1)
+        # 获取当前页码的数据
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            # 页码不是整数 显示第一页
+            articles = paginator.page(1)
+        except EmptyPage:
+            # 页码为空 显示最后一页
+            articles = paginator.page(paginator.num_pages)
+
         context = {
             "articles":articles,
             "tags":tags,
@@ -89,7 +104,7 @@ class Login(View):
         else:
             return render(request,"blogs/login.html",context=form.errors)
 
-# 评论
+# 留言
 class Comment(View):
     def get(self, request):
         return render(request, "blogs/comment.html")
@@ -104,3 +119,8 @@ class About(View):
 
     def post(self, request):
         pass
+
+def quits(request):
+    if request.method == "GET":
+        request.session.flush()
+        return redirect("blogs:登录")

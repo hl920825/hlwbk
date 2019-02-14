@@ -17,26 +17,25 @@
         <div class="w_header_nav">
             <div class="container">
                 <div class="w_header_top">
-                    {#            <a href="#" class="w_logo"></a>#}
+{#                                <a href="#" class="w_logo"></a>#}
                     <span class="w_header_nav">
                         <ul>
                             <li><a href="{% url 'blogs:首页' %}" class="active">首页</a></li>
-                            <li><a href="{% url 'blogs:关于我' %}">关于</a></li>
-                            <li><a href="{% url 'blogs:评论' %}">留言</a></li>
-                            <li><a href=""></a></li>
+                            <li><a href="{% url 'blogs:关于我' %}" class="active">关于</a></li>
+                            <li><a href="{% url 'blogs:评论' %}" class="active">留言</a></li>
                             {% if request.session.ID %}
-                                <li><a href="">{{ request.session.phone }}</a></li>
-                                <li><a href="">退出登录</a></li>
+                                <li><a href="" class="active">{{ request.session.phone }}</a></li>
+                                <li><a href="{% url 'blogs:注销' %}" class="active">退出登录</a></li>
                             {% else %}
-                                <li><a href="{% url 'blogs:登录' %}" title="登录">登录</a></li>
-                                <li><a href="{% url 'blogs:注册' %}" title="注册">注册</a></li>
+                                <li><a href="{% url 'blogs:登录' %}" title="登录" class="active">登录</a></li>
+                                <li><a href="{% url 'blogs:注册' %}" title="注册" class="active">注册</a></li>
                             {% endif %}
                         </ul>
                     </span>
                     <div class="w_search">
                         <div class="w_searchbox">
                             <form action="{% url 'search:haystack_search' %}" method="get">
-                                <input type="text" name="q" value="" class="cate-input" placeholder="search"/>
+                                <input type="text" name="q" value="" class="cate-input" placeholder="输入搜索内容"/>
                                 <input type="submit" class="cate-btn" value="搜索"/>
                             </form>
                         </div>
@@ -89,7 +88,34 @@
                         </div>
                     </div>
                 {% endfor %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if articles.has_previous %}
+                            <li>
+                                <a href="{% url 'blogs:首页' %}?page={{ articles.previous_page_number }}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
 
+                        {% for p in articles.paginator.page_range %}
+                            <li><a href="{% url 'blogs:首页' %}?page={{ p }}">{{ p }}</a></li>
+                        {% endfor %}
+
+                        {% if articles.has_next %}
+                            <li>
+                                <a href="{% url 'blogs:首页' %}?page={{ articles.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                         <li>
+                                <span aria-hidden="true">当前页:{{ articles.number }}</span>
+                            </li>
+                    </ul>
+                </nav>
             </div>
             <!--文章列表结束-->
         </div>
