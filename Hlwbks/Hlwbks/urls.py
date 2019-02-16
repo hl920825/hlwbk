@@ -18,6 +18,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # 三方插件
+    url(r'^ckeditor/',include("ckeditor_uploader.urls")),
     # 全文搜索框架
     url(r'^search/', include('haystack.urls', namespace='search')),
     url(r'^blogs/',include('blogs.urls',namespace='blogs')),
